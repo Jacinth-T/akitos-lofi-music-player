@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://*; style-src 'self' 'unsafe-inline';">
+    <title>Akito's Music — Companion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Akito's Music</h1>
+            <span class="version">Companion v1.0.0</span>
+        </header>
+
+        <div class="status-section">
+            <div class="status-row">
+                <span class="status-dot connecting" id="discord-dot"></span>
+                <span class="status-label" id="discord-label">Discord: Connecting…</span>
+            </div>
+            <div class="status-row">
+                <span class="status-dot" id="browser-dot"></span>
+                <span class="status-label" id="browser-label">Browser: Not connected</span>
+            </div>
+        </div>
+
+        <div class="track-section">
+            <div class="track-artwork" id="track-artwork">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.4">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+                </svg>
+            </div>
+            <div class="track-info">
+                <div class="track-title" id="track-title">Not playing</div>
+                <div class="track-artist" id="track-artist">Waiting for browser…</div>
+            </div>
+        </div>
+
+        <button class="quit-btn" id="quit-btn">Quit</button>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+
+</html>

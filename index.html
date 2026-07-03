@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Lofi Vibes - Immersive lofi music player with ambient sounds, dynamic themes, and a calming atmosphere.">
+  <title>Akito's Music — Chill & Focus</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/themes.css">
+  <link rel="stylesheet" href="/css/animations.css">
+  <link rel="stylesheet" href="/css/components.css">
+</head>
+
+<body>
+  <div id="app">
+    <div id="background-layer">
+      <div id="bg-image" class="bg-image"></div>
+      <div id="bg-image-next" class="bg-image bg-image-next"></div>
+      <canvas id="animation-canvas"></canvas>
+      <div id="bg-overlay"></div>
+    </div>
+
+    <div class="focus-btn-wrap">
+      <button id="btn-focus" class="focus-btn" title="Focus Mode">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </button>
+    </div>
+
+    <div id="clock-display">
+      <span id="clock-time">12:00</span>
+      <span id="clock-period">PM</span>
+    </div>
+
+    <div id="main-content">
+      <button id="toggle-panels-btn" class="icon-btn" title="Toggle Panels">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="12" cy="5" r="1" />
+          <circle cx="12" cy="19" r="1" />
+        </svg>
+      </button>
+
+      <div id="side-panel" class="glass-panel side-panel">
+        <div class="panel-tabs">
+          <button class="panel-tab active" data-tab="themes">Themes</button>
+          <button class="panel-tab" data-tab="ambience">Ambience</button>
+          <button class="panel-tab" data-tab="settings">Settings</button>
+        </div>
+
+        <div id="tab-themes" class="tab-content active">
+          <div class="theme-grid" id="theme-grid"></div>
+        </div>
+
+        <div id="tab-ambience" class="tab-content">
+          <div class="ambience-list" id="ambience-list"></div>
+        </div>
+
+        <div id="tab-settings" class="tab-content">
+          <div class="settings-group">
+            <label class="settings-label">Music Source</label>
+            <div class="music-input-wrapper">
+              <input type="text" id="music-url-input" class="music-input"
+                placeholder="Paste YouTube or SoundCloud link...">
+              <button id="music-url-submit" class="music-submit-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Discord Rich Presence</label>
+            <div class="discord-rpc-wrapper">
+              <div class="discord-input-row">
+                <input type="password" id="discord-token-input" class="music-input discord-token-input"
+                  placeholder="Paste your Discord token...">
+                <button id="discord-toggle" class="discord-toggle" title="Connect">
+                  <span class="discord-status-dot" id="discord-status-dot"></span>
+                  <span id="discord-toggle-label">OFF</span>
+                </button>
+              </div>
+              <p class="discord-disclaimer">For maximum security, your token is never saved to disk. It only stays in memory while this tab is open.</p>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Companion App (Recommended)</label>
+            <div class="discord-rpc-wrapper">
+              <div class="discord-input-row">
+                <span class="companion-label">No token needed — runs locally</span>
+                <button id="companion-toggle" class="discord-toggle" title="Connect via Companion App">
+                  <span class="discord-status-dot" id="companion-status-dot"></span>
+                  <span id="companion-toggle-label">OFF</span>
+                </button>
+              </div>
+              <div class="companion-actions">
+                <a id="companion-download" class="companion-download-btn" href="https://github.com/AkitosMusic/companion/releases/latest" target="_blank" rel="noopener">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Download Companion App
+                </a>
+              </div>
+              <p class="discord-disclaimer">Download & run the small companion app. It connects to Discord locally — no token required. Keep it running while you listen.</p>
+            </div>
+          </div>
+
+          <div class="settings-group">
+            <label class="settings-label">Accent Color</label>
+            <div class="accent-colors-grid" id="accent-colors-grid">
+              <button class="accent-color-btn active" data-color="#ff79c6" style="background-color: #ff79c6;"
+                title="Pink (Default)"><span class="color-hex">#ff79c6</span></button>
+              <button class="accent-color-btn" data-color="#bd93f9" style="background-color: #bd93f9;"
+                title="Purple"><span class="color-hex">#bd93f9</span></button>
+              <button class="accent-color-btn" data-color="#50fa7b" style="background-color: #50fa7b;"
+                title="Green"><span class="color-hex">#50fa7b</span></button>
+              <button class="accent-color-btn" data-color="#8be9fd" style="background-color: #8be9fd;"
+                title="Cyan"><span class="color-hex">#8be9fd</span></button>
+              <button class="accent-color-btn" data-color="#ffb86c" style="background-color: #ffb86c;"
+                title="Orange"><span class="color-hex">#ffb86c</span></button>
+              <button class="accent-color-btn" data-color="#ff5555" style="background-color: #ff5555;" title="Red"><span
+                  class="color-hex">#ff5555</span></button>
+              <button class="accent-color-btn" data-color="#f1fa8c" style="background-color: #f1fa8c;"
+                title="Yellow"><span class="color-hex">#f1fa8c</span></button>
+              <button class="accent-color-btn" data-color="#f8f8f2" style="background-color: #f8f8f2;"
+                title="White"><span class="color-hex">#f8f8f2</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="queue-panel" class="glass-panel queue-panel">
+        <div class="queue-header">
+          <span class="queue-title">Up Next</span>
+          <button id="queue-close" class="icon-btn icon-btn-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <div id="queue-list" class="queue-list">
+          <div class="queue-empty">No tracks in queue</div>
+        </div>
+      </div> <!-- End of main-content -->
+
+      <div id="player-wrapper">
+        <div id="player-bar" class="glass-panel">
+          <div id="player-info">
+            <div id="player-artwork">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" opacity="0.5">
+                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+              </svg>
+            </div>
+            <div id="player-text">
+              <div id="player-title">No track loaded</div>
+              <div id="player-artist">Paste a link to start</div>
+            </div>
+            <div class="player-divider"></div>
+            <button id="btn-queue" class="icon-btn" title="Queue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6" />
+                <line x1="8" y1="12" x2="21" y2="12" />
+                <line x1="8" y1="18" x2="21" y2="18" />
+                <line x1="3" y1="6" x2="3.01" y2="6" />
+                <line x1="3" y1="12" x2="3.01" y2="12" />
+                <line x1="3" y1="18" x2="3.01" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="player-controls">
+            <button id="btn-loop" class="control-btn small-btn" title="Loop: Off">
+              <svg id="icon-loop" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"></polyline>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <polyline points="7 23 3 19 7 15"></polyline>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+              </svg>
+              <svg id="icon-loop-one" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                <polyline points="17 1 21 5 17 9"></polyline>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <polyline points="7 23 3 19 7 15"></polyline>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+                <text x="12" y="16" font-size="8" font-family="sans-serif" font-weight="bold" stroke="none" fill="currentColor" text-anchor="middle">1</text>
+              </svg>
+            </button>
+            <button id="btn-prev" class="control-btn" title="Previous">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" />
+              </svg>
+            </button>
+            <button id="btn-play" class="control-btn play-btn" title="Play">
+              <svg id="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <svg id="icon-pause" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+              </svg>
+            </button>
+            <button id="btn-next" class="control-btn" title="Next">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+              </svg>
+            </button>
+            <button id="btn-shuffle" class="control-btn small-btn" title="Shuffle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 3 21 3 21 8"></polyline>
+                <line x1="4" y1="20" x2="21" y2="3"></line>
+                <polyline points="21 16 21 21 16 21"></polyline>
+                <line x1="15" y1="15" x2="21" y2="21"></line>
+                <line x1="4" y1="4" x2="9" y2="9"></line>
+              </svg>
+            </button>
+          </div>
+
+          <div id="player-right">
+            <button id="btn-ambience-toggle" class="icon-btn" title="Ambience">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 12h4l2-9 5 18 4-9h5" />
+              </svg>
+            </button>
+            <button id="btn-themes-toggle" class="icon-btn" title="Themes">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <polyline points="21 15 16 10 5 21" />
+              </svg>
+            </button>
+            <div id="volume-control">
+              <button id="btn-volume" class="icon-btn" title="Volume">
+                <svg id="icon-vol-on" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+                </svg>
+                <svg id="icon-vol-off" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
+                  style="display:none">
+                  <path
+                    d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+                </svg>
+              </button>
+              <div class="volume-slider-wrap">
+                <input type="range" id="volume-slider" class="volume-slider" min="0" max="100" value="70">
+                <div class="volume-glow" id="volume-glow"></div>
+              </div>
+            </div>
+            <button id="btn-menu" class="icon-btn" title="Settings">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="1" />
+                <circle cx="12" cy="5" r="1" />
+                <circle cx="12" cy="19" r="1" />
+              </svg>
+            </button>
+          </div>
+
+          <div id="yt-player-container"
+            style="position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
+            <div id="yt-player"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PiP Trigger Button (bottom-left, visible on hover) -->
+    <button id="pip-trigger" class="icon-btn pip-trigger" title="Picture in Picture">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 12h5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2Z" />
+        <path d="M17 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h3" />
+      </svg>
+    </button>
+
+    <script type="module" src="/js/app.js"></script>
+</body>
+
+</html>

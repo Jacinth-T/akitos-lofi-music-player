@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+companion-app/node_modules/
+
+# Build output
+dist/
+companion-app/dist/
+companion-app/out/
+companion-app/*.exe
+companion-app/*.dmg
+companion-app/*.AppImage
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

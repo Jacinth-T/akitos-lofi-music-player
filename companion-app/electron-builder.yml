@@ -1,0 +1,22 @@
+appId: com.akitosmusic.companion
+productName: "Akito's Music RPC"
+
+win:
+  target: portable
+  signAndEditExecutable: false
+
+portable:
+  artifactName: "akitos-music-rpc.exe"
+
+files:
+  - "main.js"
+  - "preload.js"
+  - "discord-ipc.js"
+  - "ws-server.js"
+  - "renderer/**/*"
+  - "package.json"
+
+asar: true
+
+directories:
+  output: dist

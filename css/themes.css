@@ -1,0 +1,59 @@
+[data-theme="cozy-bedroom"] {
+    --accent: #f0a060;
+    --accent-glow: rgba(240, 160, 96, 0.4);
+    --bg-tint: rgba(60, 30, 10, 0.3);
+    --overlay-opacity: 0.25;
+}
+
+[data-theme="rainy-window"] {
+    --accent: #7cacf0;
+    --accent-glow: rgba(124, 172, 240, 0.4);
+    --bg-tint: rgba(20, 40, 80, 0.3);
+    --overlay-opacity: 0.35;
+}
+
+[data-theme="cyberpunk-city"] {
+    --accent: #ff6eb4;
+    --accent-glow: rgba(255, 110, 180, 0.5);
+    --bg-tint: rgba(20, 5, 30, 0.3);
+    --overlay-opacity: 0.2;
+}
+
+[data-theme="anime-study"] {
+    --accent: #8bc49e;
+    --accent-glow: rgba(139, 196, 158, 0.4);
+    --bg-tint: rgba(20, 50, 30, 0.2);
+    --overlay-opacity: 0.15;
+}
+
+[data-theme="forest-cabin"] {
+    --accent: #c4a882;
+    --accent-glow: rgba(196, 168, 130, 0.4);
+    --bg-tint: rgba(30, 40, 20, 0.3);
+    --overlay-opacity: 0.25;
+}
+
+[data-theme="minimal-dark"] {
+    --accent: #a78bfa;
+    --accent-glow: rgba(167, 139, 250, 0.4);
+    --bg-tint: rgba(15, 15, 25, 0.5);
+    --overlay-opacity: 0.1;
+    --bg-glass: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="minimal-light"] {
+    --accent: #7c5cbf;
+    --accent-glow: rgba(124, 92, 191, 0.3);
+    --bg-tint: rgba(240, 235, 255, 0.3);
+    --bg-glass: rgba(0, 0, 0, 0.06);
+    --bg-glass-hover: rgba(0, 0, 0, 0.1);
+    --bg-glass-active: rgba(0, 0, 0, 0.14);
+    --text-primary: #1a1a2e;
+    --text-secondary: rgba(26, 26, 46, 0.65);
+    --text-muted: rgba(26, 26, 46, 0.35);
+    --border-glass: rgba(0, 0, 0, 0.08);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.1);
+    --overlay-opacity: 0.05;
+}
+
+/* Day/Night system - TODO for later */
