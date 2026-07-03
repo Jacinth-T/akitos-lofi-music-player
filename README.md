@@ -1,13 +1,13 @@
 # Akito's Music
 
-> A premium lofi player web app with ambient sounds, visual themes, Discord Rich Presence, and Picture-in-Picture.
+> A premium lofi player web app with ambient sounds, visual themes, Discord Rich Presence, and Picture-in-Picture, inspired by Doscord's LoFi Activity
 
 ![screenshot](docs/screenshot.png)
 
 ## Features
 
 - **Visual Themes**: 7 immersive backgrounds (e.g., Cozy Bedroom, Cyberpunk City) with smooth crossfades and dynamic canvas-based particle animations (rain, fireflies, dust).
-- **Ambience Mixer**: Layer 4 ambient sound loops (Rain, Fireplace, Thunder, Wind) with individual volume controls to set the perfect mood.
+- **Ambience Mixer**: Layer 4 ambient sound loops (Rain, Fireplace, Thunder, Wind) with individual volume controls to set the perfect mood. //(Need to fix and improve this.)
 - **Seamless Playback**: Paste any YouTube or SoundCloud link to play audio invisibly. Supports YouTube single videos and playlists.
 - **Queue System**: View and manage your upcoming tracks with automatic scrolling and active track indicators.
 - **Discord Rich Presence**: Show your currently playing track on your Discord profile using one of two methods (Companion App or direct Token).
@@ -88,9 +88,6 @@ This app offers two ways to display your listening status on Discord:
 2. **Direct Token Connection (Alternative)**: The settings panel includes an option to connect directly using your personal Discord user token. 
    - ⚠️ **Disclaimer**: Automating user accounts (using a user token to connect to the gateway) is technically against Discord's Terms of Service. While the token is never saved to disk and only kept in `sessionStorage` during your session, this method is provided solely as an alternative convenience. Use it at your own discretion!
 
-## License
-
-*(See the `LICENSE` file for details.)*
 
 ## Credits
 
