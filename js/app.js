@@ -37,25 +37,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidePanel = document.getElementById('side-panel');
     const queuePanel = document.getElementById('queue-panel');
 
-    // Open panel by default on desktop
-    if (window.innerWidth > 768) {
-        sidePanel.classList.add('open');
+    function closePanel(panel) {
+        if (panel.classList.contains('open')) {
+            panel.classList.remove('open');
+            panel.classList.add('closing');
+            panel.addEventListener('animationend', function handleAnimationEnd() {
+                panel.classList.remove('closing');
+                panel.removeEventListener('animationend', handleAnimationEnd);
+            });
+        }
+    }
+    
+    function openPanel(panel) {
+        panel.classList.remove('closing');
+        panel.classList.add('open');
+    }
+    
+    function togglePanel(panel) {
+        if (panel.classList.contains('open')) {
+            closePanel(panel);
+        } else {
+            openPanel(panel);
+        }
+    }
+
+    const btnToggleAdvanced = document.getElementById('btn-toggle-advanced');
+    if (btnToggleAdvanced) {
+        btnToggleAdvanced.addEventListener('click', () => {
+            const container = document.getElementById('advanced-settings-container');
+            container.classList.toggle('expanded');
+            const isExpanded = container.classList.contains('expanded');
+            btnToggleAdvanced.textContent = isExpanded ? 'Hide Advanced Settings' : 'Show Advanced Settings';
+        });
     }
 
     toggleBtn.addEventListener('click', () => {
-        sidePanel.classList.toggle('open');
+        togglePanel(sidePanel);
     });
 
-    const themesBtn = document.getElementById('btn-themes-toggle');
-    const ambienceBtn = document.getElementById('btn-ambience-toggle');
     const menuBtn = document.getElementById('btn-menu');
     const queueBtn = document.getElementById('btn-queue');
 
     const updateNavButtons = () => {
-        themesBtn.classList.toggle('active', sidePanel.classList.contains('open') && document.querySelector('[data-tab="themes"]').classList.contains('active'));
-        ambienceBtn.classList.toggle('active', sidePanel.classList.contains('open') && document.querySelector('[data-tab="ambience"]').classList.contains('active'));
-        menuBtn.classList.toggle('active', sidePanel.classList.contains('open') && document.querySelector('[data-tab="settings"]').classList.contains('active'));
-        queueBtn.classList.toggle('active', queuePanel.classList.contains('open'));
+        if (menuBtn) menuBtn.classList.toggle('active', sidePanel.classList.contains('open'));
+        if (queueBtn) queueBtn.classList.toggle('active', queuePanel.classList.contains('open'));
     };
 
     panelTabs.forEach(tab => {
@@ -68,62 +93,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    themesBtn.addEventListener('click', () => {
-        queuePanel.classList.remove('open');
-        const isOpen = sidePanel.classList.contains('open');
-        const isThemesTab = document.querySelector('[data-tab="themes"]').classList.contains('active');
-        if (isOpen && isThemesTab) {
-            sidePanel.classList.remove('open');
-        } else {
-            sidePanel.classList.add('open');
-            panelTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="themes"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById('tab-themes').classList.add('active');
-        }
-        updateNavButtons();
-    });
-
-    ambienceBtn.addEventListener('click', () => {
-        queuePanel.classList.remove('open');
-        const isOpen = sidePanel.classList.contains('open');
-        const isAmbienceTab = document.querySelector('[data-tab="ambience"]').classList.contains('active');
-        if (isOpen && isAmbienceTab) {
-            sidePanel.classList.remove('open');
-        } else {
-            sidePanel.classList.add('open');
-            panelTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="ambience"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById('tab-ambience').classList.add('active');
-        }
-        updateNavButtons();
-    });
-
-    menuBtn.addEventListener('click', () => {
-        queuePanel.classList.remove('open');
-        const isOpen = sidePanel.classList.contains('open');
-        const isSettingsTab = document.querySelector('[data-tab="settings"]').classList.contains('active');
-        if (isOpen && isSettingsTab) {
-            sidePanel.classList.remove('open');
-        } else {
-            sidePanel.classList.add('open');
-            panelTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector('[data-tab="settings"]').classList.add('active');
-            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
-            document.getElementById('tab-settings').classList.add('active');
-        }
-        updateNavButtons();
-    });
+    if (menuBtn) {
+        menuBtn.addEventListener('click', () => {
+            closePanel(queuePanel);
+            togglePanel(sidePanel);
+            updateNavButtons();
+        });
+    }
 
     document.getElementById('queue-close').addEventListener('click', () => {
-        queuePanel.classList.remove('open');
+        closePanel(queuePanel);
         updateNavButtons();
     });
 
     queueBtn.addEventListener('click', () => {
-        sidePanel.classList.remove('open');
-        queuePanel.classList.toggle('open');
+        closePanel(sidePanel);
+        togglePanel(queuePanel);
         updateNavButtons();
     });
 
@@ -150,9 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth <= 768) {
             if (!sidePanel.contains(e.target) &&
                 !toggleBtn.contains(e.target) &&
-                !themesBtn.contains(e.target) &&
-                !menuBtn.contains(e.target) &&
-                !ambienceBtn.contains(e.target)) {
+                (!menuBtn || !menuBtn.contains(e.target))) {
                 sidePanel.classList.remove('open');
                 updateNavButtons();
             }
@@ -169,6 +152,39 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.addEventListener('click', resumeAudio);
     document.addEventListener('keydown', resumeAudio);
+
+    // --- Keyboard Shortcuts ---
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        switch(e.code) {
+            case 'Space':
+                e.preventDefault();
+                const playBtn = document.getElementById('btn-play');
+                if (playBtn) playBtn.click();
+                break;
+            case 'KeyM':
+                const volBtn = document.getElementById('btn-volume');
+                if (volBtn) volBtn.click();
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                const volSliderUp = document.getElementById('volume-slider');
+                if (volSliderUp) {
+                    volSliderUp.value = Math.min(100, parseInt(volSliderUp.value) + 10);
+                    volSliderUp.dispatchEvent(new Event('input'));
+                }
+                break;
+            case 'ArrowDown':
+                e.preventDefault();
+                const volSliderDown = document.getElementById('volume-slider');
+                if (volSliderDown) {
+                    volSliderDown.value = Math.max(0, parseInt(volSliderDown.value) - 10);
+                    volSliderDown.dispatchEvent(new Event('input'));
+                }
+                break;
+        }
+    });
 
     const accentBtns = document.querySelectorAll('.accent-color-btn');
     accentBtns.forEach(btn => {

@@ -149,3 +149,8 @@
 .anim-breathe {
     animation: breathe 3s ease-in-out infinite;
 }
+@keyframes slideWave {
+    0% { background-position: 0 center; }
+    100% { background-position: -32px center; }
+}
+

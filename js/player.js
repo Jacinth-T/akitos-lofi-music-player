@@ -65,7 +65,12 @@ export function initPlayer(stateCallback) {
         if (e.key === 'Enter') submitUrl();
     });
 
-    const savedUrl = getState('musicUrl');
+    let savedUrl = getState('musicUrl');
+    if (!savedUrl) {
+        savedUrl = 'https://www.youtube.com/watch?v=jfKfPfyJRdk';
+        saveState({ musicUrl: savedUrl });
+    }
+    
     if (savedUrl) {
         document.getElementById('music-url-input').value = savedUrl;
     }
@@ -93,6 +98,9 @@ function submitUrl() {
 export function loadUrl(url) {
     cleanupCurrent();
 
+    const errorMsg = document.getElementById('url-error-msg');
+    if (errorMsg) errorMsg.style.display = 'none';
+
     const yt = parseYouTube(url);
     if (yt) {
         currentSource = 'youtube';
@@ -109,6 +117,10 @@ export function loadUrl(url) {
 
     titleEl().textContent = 'Unsupported link';
     artistEl().textContent = 'Try YouTube or SoundCloud';
+    if (errorMsg) {
+        errorMsg.textContent = 'Invalid link. Try a YouTube or SoundCloud URL.';
+        errorMsg.style.display = 'block';
+    }
 }
 
 function parseYouTube(url) {
@@ -235,7 +247,7 @@ function loadYouTube(parsed) {
         ytPlayer.loadVideoById(parsed.videoId);
         queue = [{ title: 'Loading...', artist: 'YouTube', videoId: parsed.videoId }];
         queueIndex = 0;
-        renderQueue();
+        renderQueue(true);
     }
 }
 
@@ -270,7 +282,7 @@ function pollForPlaylist() {
                     queue[queueIndex].title = data.title;
                     queue[queueIndex].artist = data.author || 'YouTube';
                 }
-                renderQueue();
+                renderQueue(true);
                 // Fetch real titles for ALL tracks
                 fetchAllTrackTitles(playlist);
             }
@@ -359,7 +371,7 @@ function updateQueueFromYT() {
                 };
             }
             queueIndex = idx;
-            renderQueue();
+            renderQueue(true);
         }
     } catch { }
 }
@@ -539,9 +551,11 @@ function updatePlayIcon() {
     document.getElementById('icon-pause').style.display = isPlaying ? 'block' : 'none';
 }
 
-function renderQueue() {
+function renderQueue(scrollActive = false) {
     const list = document.getElementById('queue-list');
     if (!list) return;
+    
+    const scrollPos = list.scrollTop;
     list.innerHTML = '';
 
     if (queue.length === 0) {
@@ -570,8 +584,10 @@ function renderQueue() {
     });
 
     const activeItem = list.querySelector('.queue-item.active');
-    if (activeItem) {
-        activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    if (activeItem && scrollActive) {
+        activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } else {
+        list.scrollTop = scrollPos;
     }
 }
 

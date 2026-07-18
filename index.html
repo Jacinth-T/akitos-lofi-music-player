@@ -9,9 +9,8 @@
   <title>Akito's Music — Chill & Focus</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Quicksand:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/themes.css">
@@ -29,7 +28,7 @@
     </div>
 
     <div class="focus-btn-wrap">
-      <button id="btn-focus" class="focus-btn" title="Focus Mode">
+      <button id="btn-focus" class="focus-btn" aria-label="Focus Mode">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -44,7 +43,7 @@
     </div>
 
     <div id="main-content">
-      <button id="toggle-panels-btn" class="icon-btn" title="Toggle Panels">
+      <button id="toggle-panels-btn" class="icon-btn" aria-label="Toggle Panels">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="1" />
@@ -72,24 +71,24 @@
           <div class="settings-group">
             <label class="settings-label">Music Source</label>
             <div class="music-input-wrapper">
-              <input type="text" id="music-url-input" class="music-input"
-                placeholder="Paste YouTube or SoundCloud link...">
-              <button id="music-url-submit" class="music-submit-btn">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <polyline points="9 18 15 12 9 6" />
-                </svg>
+              <input type="text" id="music-url-input" class="music-input" placeholder="Paste YouTube or SoundCloud link...">
+              <button id="music-url-submit" class="music-submit-btn" aria-label="Load Stream">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
               </button>
             </div>
+            <div id="url-error-msg" class="url-error" style="display:none; color: #f04747; font-size: 11px; margin-top: 6px; font-weight: 500;"></div>
           </div>
 
-          <div class="settings-group">
-            <label class="settings-label">Discord Rich Presence</label>
-            <div class="discord-rpc-wrapper">
+          <button id="btn-toggle-advanced" class="advanced-toggle" style="width: 100%; margin: 12px 0 16px 0; border: 1px solid var(--border-glass); padding: 8px 12px; background: var(--bg-glass); color: var(--text-primary); border-radius: 8px; cursor: pointer; font-family: var(--font-secondary);">Show Advanced Settings</button>
+          
+          <div id="advanced-settings-container">
+            <div class="settings-group">
+              <label class="settings-label">Discord Rich Presence</label>
+              <div class="discord-rpc-wrapper">
               <div class="discord-input-row">
                 <input type="password" id="discord-token-input" class="music-input discord-token-input"
                   placeholder="Paste your Discord token...">
-                <button id="discord-toggle" class="discord-toggle" title="Connect">
+                <button id="discord-toggle" class="discord-toggle" aria-label="Connect">
                   <span class="discord-status-dot" id="discord-status-dot"></span>
                   <span id="discord-toggle-label">OFF</span>
                 </button>
@@ -103,7 +102,7 @@
             <div class="discord-rpc-wrapper">
               <div class="discord-input-row">
                 <span class="companion-label">No token needed — runs locally</span>
-                <button id="companion-toggle" class="discord-toggle" title="Connect via Companion App">
+                <button id="companion-toggle" class="discord-toggle" aria-label="Connect via Companion App">
                   <span class="discord-status-dot" id="companion-status-dot"></span>
                   <span id="companion-toggle-label">OFF</span>
                 </button>
@@ -121,26 +120,23 @@
               <p class="discord-disclaimer">Download & run the small companion app. It connects to Discord locally — no token required. Keep it running while you listen.</p>
             </div>
           </div>
+          </div>
 
           <div class="settings-group">
             <label class="settings-label">Accent Color</label>
             <div class="accent-colors-grid" id="accent-colors-grid">
-              <button class="accent-color-btn active" data-color="#ff79c6" style="background-color: #ff79c6;"
-                title="Pink (Default)"><span class="color-hex">#ff79c6</span></button>
-              <button class="accent-color-btn" data-color="#bd93f9" style="background-color: #bd93f9;"
-                title="Purple"><span class="color-hex">#bd93f9</span></button>
-              <button class="accent-color-btn" data-color="#50fa7b" style="background-color: #50fa7b;"
-                title="Green"><span class="color-hex">#50fa7b</span></button>
-              <button class="accent-color-btn" data-color="#8be9fd" style="background-color: #8be9fd;"
-                title="Cyan"><span class="color-hex">#8be9fd</span></button>
-              <button class="accent-color-btn" data-color="#ffb86c" style="background-color: #ffb86c;"
-                title="Orange"><span class="color-hex">#ffb86c</span></button>
-              <button class="accent-color-btn" data-color="#ff5555" style="background-color: #ff5555;" title="Red"><span
-                  class="color-hex">#ff5555</span></button>
-              <button class="accent-color-btn" data-color="#f1fa8c" style="background-color: #f1fa8c;"
-                title="Yellow"><span class="color-hex">#f1fa8c</span></button>
-              <button class="accent-color-btn" data-color="#f8f8f2" style="background-color: #f8f8f2;"
-                title="White"><span class="color-hex">#f8f8f2</span></button>
+              <button class="accent-color-btn active" data-color="#a78bfa" style="background-color: #a78bfa;"
+                aria-label="Twilight (Default)"><span class="color-hex">#a78bfa</span></button>
+              <button class="accent-color-btn" data-color="#8bc49e" style="background-color: #8bc49e;"
+                aria-label="Matcha"><span class="color-hex">#8bc49e</span></button>
+              <button class="accent-color-btn" data-color="#c4a882" style="background-color: #c4a882;"
+                aria-label="Coffee"><span class="color-hex">#c4a882</span></button>
+              <button class="accent-color-btn" data-color="#f0a060" style="background-color: #f0a060;"
+                aria-label="Sunset"><span class="color-hex">#f0a060</span></button>
+              <button class="accent-color-btn" data-color="#d48e8e" style="background-color: #d48e8e;"
+                aria-label="Rose"><span class="color-hex">#d48e8e</span></button>
+              <button class="accent-color-btn" data-color="#6b7280" style="background-color: #6b7280;"
+                aria-label="Slate"><span class="color-hex">#6b7280</span></button>
             </div>
           </div>
         </div>
@@ -171,25 +167,26 @@
               </svg>
             </div>
             <div id="player-text">
-              <div id="player-title">No track loaded</div>
-              <div id="player-artist">Paste a link to start</div>
+              <div id="player-title">lofi hip hop radio 📚</div>
+              <div id="player-artist">Lofi Girl</div>
             </div>
             <div class="player-divider"></div>
-            <button id="btn-queue" class="icon-btn" title="Queue">
+            <button id="btn-queue" class="icon-btn btn-with-label" aria-label="Queue">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <line x1="8" y1="6" x2="21" y2="6" />
-                <line x1="8" y1="12" x2="21" y2="12" />
-                <line x1="8" y1="18" x2="21" y2="18" />
-                <line x1="3" y1="6" x2="3.01" y2="6" />
-                <line x1="3" y1="12" x2="3.01" y2="12" />
-                <line x1="3" y1="18" x2="3.01" y2="18" />
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
               </svg>
+              <span class="icon-label">Queue</span>
             </button>
           </div>
 
           <div id="player-controls">
-            <button id="btn-loop" class="control-btn small-btn" title="Loop: Off">
+            <button id="btn-loop" class="control-btn small-btn" aria-label="Loop: Off">
               <svg id="icon-loop" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="17 1 21 5 17 9"></polyline>
@@ -206,12 +203,12 @@
                 <text x="12" y="16" font-size="8" font-family="sans-serif" font-weight="bold" stroke="none" fill="currentColor" text-anchor="middle">1</text>
               </svg>
             </button>
-            <button id="btn-prev" class="control-btn" title="Previous">
+            <button id="btn-prev" class="control-btn" aria-label="Previous">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z" />
               </svg>
             </button>
-            <button id="btn-play" class="control-btn play-btn" title="Play">
+            <button id="btn-play" class="control-btn play-btn" aria-label="Play">
               <svg id="icon-play" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M8 5v14l11-7z" />
               </svg>
@@ -219,12 +216,12 @@
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
               </svg>
             </button>
-            <button id="btn-next" class="control-btn" title="Next">
+            <button id="btn-next" class="control-btn" aria-label="Next">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
               </svg>
             </button>
-            <button id="btn-shuffle" class="control-btn small-btn" title="Shuffle">
+            <button id="btn-shuffle" class="control-btn small-btn" aria-label="Shuffle">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="16 3 21 3 21 8"></polyline>
@@ -237,22 +234,8 @@
           </div>
 
           <div id="player-right">
-            <button id="btn-ambience-toggle" class="icon-btn" title="Ambience">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 12h4l2-9 5 18 4-9h5" />
-              </svg>
-            </button>
-            <button id="btn-themes-toggle" class="icon-btn" title="Themes">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-            </button>
             <div id="volume-control">
-              <button id="btn-volume" class="icon-btn" title="Volume">
+              <button id="btn-volume" class="icon-btn" aria-label="Volume">
                 <svg id="icon-vol-on" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                   <path
                     d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
@@ -268,13 +251,14 @@
                 <div class="volume-glow" id="volume-glow"></div>
               </div>
             </div>
-            <button id="btn-menu" class="icon-btn" title="Settings">
+            <button id="btn-menu" class="icon-btn btn-with-label" aria-label="Menu">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="1" />
                 <circle cx="12" cy="5" r="1" />
                 <circle cx="12" cy="19" r="1" />
               </svg>
+              <span class="icon-label">Menu</span>
             </button>
           </div>
 
@@ -287,7 +271,7 @@
     </div>
 
     <!-- PiP Trigger Button (bottom-left, visible on hover) -->
-    <button id="pip-trigger" class="icon-btn pip-trigger" title="Picture in Picture">
+    <button id="pip-trigger" class="icon-btn pip-trigger" aria-label="Picture in Picture">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round">
         <path d="M15 12h5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2Z" />
